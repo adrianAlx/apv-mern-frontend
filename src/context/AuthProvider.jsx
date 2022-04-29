@@ -17,6 +17,7 @@ const AuthProvider = ({ children }) => {
       if (!tokenJWT) return setAuthLoading(false);
 
       try {
+        // Check token
         const { data } = await fetchWithToken(
           '/veterinarians/profile',
           'GET',
@@ -31,13 +32,12 @@ const AuthProvider = ({ children }) => {
 
       // Private Routes
       setAuthLoading(false);
-      console.log(authLoading);
     };
 
     authenticateUser();
   }, []);
 
-  const cerrarSesion = () => {
+  const logOut = () => {
     localStorage.removeItem('token');
     setAuth({});
 
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
         auth,
         setAuth,
         authLoading,
-        cerrarSesion,
+        logOut,
         actualizarPerfil,
         guardarPassword,
       }}

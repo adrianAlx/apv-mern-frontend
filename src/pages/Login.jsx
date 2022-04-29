@@ -67,7 +67,10 @@ export const Login = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <label
+              htmlFor="email"
+              className="uppercase text-gray-600 block text-xl font-bold"
+            >
               Email
             </label>
             <input
@@ -78,10 +81,14 @@ export const Login = () => {
               name="email"
               value={email}
               onChange={handleLoginInputChange}
+              id="email"
             />
           </div>
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <label
+              htmlFor="password"
+              className="uppercase text-gray-600 block text-xl font-bold"
+            >
               Password
             </label>
             <input
@@ -91,6 +98,7 @@ export const Login = () => {
               name="password"
               value={password}
               onChange={handleLoginInputChange}
+              id="password"
             />
           </div>
 

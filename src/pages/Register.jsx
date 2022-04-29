@@ -5,13 +5,15 @@ import { useForm } from '../hook/useForm';
 import { Alert } from '../components/Alert';
 import { fetchWithoutToken } from '../helpers/fetch';
 
+const initState = {
+  name: '',
+  email: '',
+  password: '',
+  repeatPassword: '',
+};
+
 export const Register = () => {
-  const [formValues, handleInputChange] = useForm({
-    name: '',
-    email: '',
-    password: '',
-    repeatPassword: '',
-  });
+  const [formValues, handleInputChange, , setFormValues] = useForm(initState);
   const { name, email, password, repeatPassword } = formValues;
 
   const [alerta, setAlerta] = useState({});
@@ -19,6 +21,7 @@ export const Register = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setAlerta({});
 
     if ([name, email, password, repeatPassword].includes(''))
       return setAlerta({ msg: 'Hay campos vacios', error: true });
@@ -32,23 +35,22 @@ export const Register = () => {
         error: true,
       });
 
-    setAlerta({});
-
     // Crear el user en DB
     try {
-      await fetchWithoutToken(
-        '/veterinarios',
+      const { data } = await fetchWithoutToken(
+        '/veterinarians',
         { name, email, password },
         'POST'
       );
 
       setAlerta({
-        msg: 'Usuario creado correctamente, revisa tu email',
+        msg: data.msg,
         error: false,
       });
+      // setFormValues(initState);
     } catch (error) {
       setAlerta({
-        msg: error.response.data.msg,
+        msg: error.response.data.errors[0].msg,
         error: true,
       });
     }
@@ -59,7 +61,7 @@ export const Register = () => {
       <div>
         <h1 className="text-indigo-600 font-black text-6xl">
           Crea tu Cuenta y Administra
-          <span className="text-black block"> tus Pacientes</span>
+          <span className="text-black"> tus Pacientes</span>
         </h1>
       </div>
 
@@ -152,7 +154,7 @@ export const Register = () => {
           </Link>
 
           <Link
-            to="/reset-password"
+            to="/password-recovery"
             className="block text-center my-5 text-gray-500"
           >
             Olvide mi password

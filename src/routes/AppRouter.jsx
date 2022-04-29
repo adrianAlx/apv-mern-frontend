@@ -11,6 +11,8 @@ import { Login } from '../pages/Login';
 import { PatientManagement } from '../pages/PatientManagement';
 import { Register } from '../pages/Register';
 import { PasswordRecovery } from '../pages/PasswordRecovery';
+import { ConfirmAccount } from '../pages/ConfirmAccount';
+import { NewPassword } from '../pages/NewPassword';
 
 export const AppRouter = () => {
   const { authLoading } = useAuth();
@@ -34,7 +36,9 @@ export const AppRouter = () => {
         >
           <Route index element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="confirm-account/:token" element={<ConfirmAccount />} />
           <Route path="password-recovery" element={<PasswordRecovery />} />
+          <Route path="reset-password/:token" element={<NewPassword />} />
         </Route>
 
         <Route
