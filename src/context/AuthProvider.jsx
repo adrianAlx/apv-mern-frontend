@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
         setAuth(data.user);
       } catch (error) {
         console.log(error.response.data);
-        // setAuth({});
         logOut();
       }
 
