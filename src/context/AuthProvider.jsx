@@ -46,29 +46,30 @@ const AuthProvider = ({ children }) => {
     }, 100);
   };
 
-  const actualizarPerfil = async datos => {
+  const updateProfile = async data => {
     validateTokenFromLS();
     if (!tokenJWT) return setAuthLoading(false);
 
     try {
-      const url = `/veterinarios/perfil/${datos._id}`;
-      await fetchWithToken(url, 'PUT', tokenJWT, datos);
-
-      return {
-        msg: 'Almacenado Correctamente',
-        error: false,
-      };
+      const url = `/veterinarians/profile/${data.uid}`;
+      const { data: apiData } = await fetchWithToken(
+        url,
+        'PUT',
+        tokenJWT,
+        data
+      );
+      return apiData;
     } catch (error) {
       if (error) throw error;
     }
   };
 
-  const guardarPassword = async datos => {
+  const updatePassword = async datos => {
     validateTokenFromLS();
     if (!tokenJWT) return setAuthLoading(false);
 
     try {
-      const url = '/veterinarios/actualizar-password';
+      const url = '/veterinarians/update-password';
       const { data } = await fetchWithToken(url, 'PUT', tokenJWT, datos);
 
       return {
@@ -83,11 +84,12 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         auth,
-        setAuth,
         authLoading,
+
+        setAuth,
         logOut,
-        actualizarPerfil,
-        guardarPassword,
+        updateProfile,
+        updatePassword,
       }}
     >
       {children}

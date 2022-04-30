@@ -1,32 +1,32 @@
 import { useState } from 'react';
-// import Formulario from '../components/Formulario';
-// import ListadoPacientes from '../components/ListadoPacientes';
+
+import { Form } from '../components/Form';
+import { PatientList } from '../components/PatientList';
 
 export const PatientManagement = () => {
-  // const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   return (
-    // <div className="flex flex-col md:flex-row">
-    //   <button
-    //     type="button"
-    //     className="bg-indigo-600 text-white font-bold uppercase mx-10 p-3 rounded-md mb-10 md:hidden"
-    //     onClick={() => setMostrarFormulario(!mostrarFormulario)}
-    //   >
-    //     {mostrarFormulario ? 'Ocultar Formulario' : 'Mostrar Formulario'}
-    //   </button>
+    <div className="flex flex-col md:flex-row">
+      <button
+        type="button"
+        onClick={() => setShowForm(!showForm)}
+        className="bg-indigo-600 text-white font-bold uppercase mx-10 mb-5 p-3 rounded-md md:hidden"
+      >
+        {showForm ? 'Ocultar' : 'Mostrar'} formulario
+      </button>
 
-    //   <div
-    //     className={`${
-    //       mostrarFormulario ? 'block' : 'hidden'
-    //     } md:block md:w-1/2 lg:w-2/5 `}
-    //   >
-    //     <Formulario />
-    //   </div>
+      <div
+        className={`${
+          showForm ? 'block' : 'hidden'
+        } check-this md:w-1/2 lg:w-2/5 md:block`}
+      >
+        <Form />
+      </div>
 
-    //   <div className="md:w-1/2 lg:w-3/5">
-    //     <ListadoPacientes />
-    //   </div>
-    // </div>
-    <h1>Hello World!</h1>
+      <div className="md:w-1/2 lg:w-3/5">
+        <PatientList />
+      </div>
+    </div>
   );
 };
