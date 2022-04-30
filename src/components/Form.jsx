@@ -48,8 +48,8 @@ export const Form = () => {
       reset();
       setId(null);
     } catch (error) {
-      console.log(error);
       console.log(error.response);
+      setAlerta({ msg: error.response.data.msg, error: true });
     }
   };
 

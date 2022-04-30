@@ -1,20 +1,16 @@
 import { createContext, useState, useCallback } from 'react';
 
 import { fetchWithToken } from '../helpers/fetch';
+import { getJwtFromLS } from '../helpers/validateJwt';
 
 export const PatientsContext = createContext();
-
-let tokenJWT;
-
-const validateTokenFromLS = () =>
-  (tokenJWT = localStorage.getItem('token') || false);
 
 export const PatientsProvider = ({ children }) => {
   const [patients, setPatients] = useState([]);
   const [patient, setPatient] = useState({});
 
   const addPatient = async patient => {
-    validateTokenFromLS();
+    const tokenJWT = getJwtFromLS();
     if (!tokenJWT) return;
 
     if (patient.id) {
@@ -38,7 +34,7 @@ export const PatientsProvider = ({ children }) => {
         if (error) throw error;
       }
     } else {
-      validateTokenFromLS();
+      const tokenJWT = getJwtFromLS();
       if (!tokenJWT) return;
 
       try {
@@ -61,23 +57,14 @@ export const PatientsProvider = ({ children }) => {
 
   // TODO: Limpiar pacientes al hacer logout - Redux
 
-  const setEdicion = paciente => {
-    validateTokenFromLS();
-    if (!tokenJWT) return;
-    setPatient(paciente);
-  };
-
   const deletePatient = async id => {
-    validateTokenFromLS();
+    const tokenJWT = getJwtFromLS();
     if (!tokenJWT) return;
 
     const confirmar = confirm('¿Confirmas que deseas eliminar ?');
 
     if (confirmar) {
       try {
-        validateTokenFromLS();
-        if (!tokenJWT) return;
-
         await fetchWithToken(`/patients/${id}`, 'DELETE', tokenJWT);
 
         const pacientesActualizado = patients.filter(
@@ -93,7 +80,7 @@ export const PatientsProvider = ({ children }) => {
 
   const setPatientsCb = useCallback(
     apiData => {
-      validateTokenFromLS();
+      const tokenJWT = getJwtFromLS();
       if (!tokenJWT) return;
 
       setPatients(apiData);
@@ -102,7 +89,7 @@ export const PatientsProvider = ({ children }) => {
   );
   const setPatientCb = useCallback(
     apiData => {
-      validateTokenFromLS();
+      const tokenJWT = getJwtFromLS();
       if (!tokenJWT) return;
 
       setPatient(apiData);
@@ -116,7 +103,6 @@ export const PatientsProvider = ({ children }) => {
         patients,
         patient,
         addPatient,
-        setEdicion,
         deletePatient,
 
         setPatientsCb,

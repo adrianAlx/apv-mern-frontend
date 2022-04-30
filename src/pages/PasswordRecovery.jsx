@@ -12,7 +12,6 @@ export const PasswordRecovery = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     if (email === '' || email.length < 6)
       return setAlerta({ msg: 'El Email es obligatorio', error: true });
 

@@ -3,12 +3,9 @@ import { Outlet } from 'react-router-dom';
 
 import { usePatients } from '../hook/usePatients';
 import { fetchWithToken } from '../helpers/fetch';
+import { getJwtFromLS } from '../helpers/validateJwt';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-
-let tokenJWT;
-const validateTokenFromLS = () =>
-  (tokenJWT = localStorage.getItem('token') || false);
 
 export const DashboardLayout = () => {
   const { setPatientsCb } = usePatients();
@@ -16,13 +13,11 @@ export const DashboardLayout = () => {
   useEffect(() => {
     const getPatients = async () => {
       try {
-        validateTokenFromLS();
+        const tokenJWT = getJwtFromLS();
         if (!tokenJWT) return;
 
         const { data } = await fetchWithToken('/patients', 'GET', tokenJWT);
         setPatientsCb(data.patients);
-
-        console.log('PRIVATE - Dashboard');
       } catch (error) {
         console.log(error);
       }

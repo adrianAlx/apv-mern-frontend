@@ -52,10 +52,9 @@ export const AppRouter = () => {
           }
         >
           <Route index element={<PatientManagement />} />
-
-          <Route path="*" element={<Navigate to="/admin" replace />} />
           <Route path="profile" element={<EditProfile />} />
           <Route path="change-password" element={<ChangePassword />} />
+          <Route path="*" element={<Navigate to="/admin" replace />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

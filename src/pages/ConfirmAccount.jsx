@@ -12,8 +12,7 @@ export const ConfirmAccount = () => {
   const [alerta, setAlerta] = useState({});
 
   useEffect(() => {
-    // ()();
-    const checkToken = async () => {
+    (async () => {
       try {
         const { data } = await fetchWithoutToken(
           `/veterinarians/confirm/${token}`
@@ -32,12 +31,7 @@ export const ConfirmAccount = () => {
       }
 
       setLoading(false);
-    };
-
-    checkToken();
-    // return () => {
-    //   checkToken();
-    // };
+    })();
   }, []);
 
   return (

@@ -7,7 +7,7 @@ import { Alert } from '../components/Alert';
 import { AdminNav } from '../components/AdminNav';
 
 export const EditProfile = () => {
-  const { auth, updateProfile, setAuth } = useAuth();
+  const { auth, updateProfile, setAuthCb } = useAuth();
 
   const [formValues, handleInputChange] = useForm(auth);
   const { name, email, phone, web } = formValues;
@@ -26,7 +26,7 @@ export const EditProfile = () => {
 
     try {
       const data = await updateProfile(formValues);
-      setAuth(data.user);
+      setAuthCb(data.user);
 
       setAlerta({
         msg: data.msg,
@@ -103,7 +103,7 @@ export const EditProfile = () => {
                 type="tel"
                 placeholder="Telefono"
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="telefono"
+                name="phone"
                 value={phone || ''}
                 onChange={handleInputChange}
               />

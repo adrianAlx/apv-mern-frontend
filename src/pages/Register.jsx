@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from '../hook/useForm';
-import { Alert } from '../components/Alert';
 import { fetchWithoutToken } from '../helpers/fetch';
+import { Alert } from '../components/Alert';
 
 const initState = {
   name: '',
@@ -13,7 +13,7 @@ const initState = {
 };
 
 export const Register = () => {
-  const [formValues, handleInputChange, , setFormValues] = useForm(initState);
+  const [formValues, handleInputChange, reset] = useForm(initState);
   const { name, email, password, repeatPassword } = formValues;
 
   const [alerta, setAlerta] = useState({});
@@ -35,7 +35,7 @@ export const Register = () => {
         error: true,
       });
 
-    // Crear el user en DB
+    // Add new veterinary
     try {
       const { data } = await fetchWithoutToken(
         '/veterinarians',
@@ -47,7 +47,7 @@ export const Register = () => {
         msg: data.msg,
         error: false,
       });
-      // setFormValues(initState);
+      reset();
     } catch (error) {
       setAlerta({
         msg: error.response.data.errors[0].msg,
@@ -99,7 +99,7 @@ export const Register = () => {
               type="email"
               placeholder="Email"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
-              // autoComplete="off"
+              autoComplete="off"
               name="email"
               value={email}
               onChange={handleInputChange}

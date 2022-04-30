@@ -15,7 +15,7 @@ export const NewPassword = () => {
   const [updatedPassword, setUpdatedPassword] = useState(false);
 
   useEffect(() => {
-    const comprobarToken = async () => {
+    (async () => {
       try {
         await fetchWithoutToken(`/veterinarians/password-recovery/${token}`);
         setAlerta({
@@ -28,13 +28,11 @@ export const NewPassword = () => {
           error: true,
         });
       }
-    };
-    comprobarToken();
+    })();
   }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     if (password.length < 6) {
       return setAlerta({
         msg: 'El Password debe ser mínimo de 6 caracteres',
@@ -62,7 +60,7 @@ export const NewPassword = () => {
     <>
       <div>
         <h1 className="text-indigo-600 font-black text-6xl">
-        Reestablece tu password y no Pierdas Acceso a
+          Reestablece tu password y no Pierdas Acceso a
           <span className="text-black block"> tus Pacientes</span>
         </h1>
       </div>

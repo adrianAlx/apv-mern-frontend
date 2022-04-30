@@ -8,15 +8,15 @@ import { Alert } from '../components/Alert';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { setAuthCb } = useAuth();
 
   const [formLoginValues, handleLoginInputChange] = useForm({
     email: '',
     password: '',
   });
-  const [alerta, setAlerta] = useState({});
-
   const { email, password } = formLoginValues;
+
+  const [alerta, setAlerta] = useState({});
   const { msg } = alerta;
 
   const handleSubmit = async e => {
@@ -41,7 +41,7 @@ export const Login = () => {
         'POST'
       );
       localStorage.setItem('token', data.token);
-      setAuth(data.user);
+      setAuthCb(data.user);
 
       const lastPath = localStorage.getItem('lastPath') || '/admin';
       navigate(`${lastPath}`, { replace: true });

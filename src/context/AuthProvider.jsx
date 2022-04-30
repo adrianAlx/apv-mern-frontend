@@ -1,19 +1,16 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useCallback } from 'react';
 import { fetchWithToken } from '../helpers/fetch';
+import { getJwtFromLS } from '../helpers/validateJwt';
 
 export const AuthContext = createContext();
-let tokenJWT;
 
-const validateTokenFromLS = () =>
-  (tokenJWT = localStorage.getItem('token') || false);
-
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
   const [auth, setAuth] = useState({});
 
   useEffect(() => {
-    const authenticateUser = async () => {
-      validateTokenFromLS();
+    (async () => {
+      const tokenJWT = getJwtFromLS();
       if (!tokenJWT) return setAuthLoading(false);
 
       try {
@@ -27,14 +24,13 @@ const AuthProvider = ({ children }) => {
         setAuth(data.user);
       } catch (error) {
         console.log(error.response.data);
-        setAuth({});
+        // setAuth({});
+        logOut();
       }
 
       // Private Routes
       setAuthLoading(false);
-    };
-
-    authenticateUser();
+    })();
   }, []);
 
   const logOut = () => {
@@ -47,7 +43,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const updateProfile = async data => {
-    validateTokenFromLS();
+    const tokenJWT = getJwtFromLS();
     if (!tokenJWT) return setAuthLoading(false);
 
     try {
@@ -65,7 +61,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const updatePassword = async datos => {
-    validateTokenFromLS();
+    const tokenJWT = getJwtFromLS();
     if (!tokenJWT) return setAuthLoading(false);
 
     try {
@@ -80,13 +76,23 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const setAuthCb = useCallback(
+    user => {
+      const tokenJWT = getJwtFromLS();
+      if (!tokenJWT) return;
+
+      setAuth(user);
+    },
+    [setAuth]
+  );
+
   return (
     <AuthContext.Provider
       value={{
         auth,
         authLoading,
 
-        setAuth,
+        setAuthCb,
         logOut,
         updateProfile,
         updatePassword,
@@ -96,5 +102,3 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export { AuthProvider };
