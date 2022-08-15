@@ -4,7 +4,7 @@ This is a basic fullstack project that includes the MERN stack.
 
 ## Features included in this project
 
-- React v18
+- React.js
 - React Router DOM v6
 - Context API
 - Vite
@@ -15,12 +15,12 @@ This is a basic fullstack project that includes the MERN stack.
 ```
 # install dependencies
 npm i
+yarn
 
 # run in dev mode on port 3000
 npm run dev
+yarn dev
 
-# generate production build
-npm run build
 
 ```
 
@@ -38,6 +38,12 @@ The Global State of the app in the fronted is handled with Context API through a
 
 The user must register with an e-mail address that has not been used before. Once the account has been created, the user must confirm the e-mail address entered by clicking on a link that will be sent immediately.
 This link will contain a one-time use token which, after validation, will be removed from the database so that it cannot be used again.
+
+## View demo
+[Demo](https://apv-mern-adrianlx.netlify.app/)
+
+## Backend
+[GitHub](https://github.com/adrianAlx/apv-mern-back)
 
 ### Screenshots
 
