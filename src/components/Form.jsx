@@ -24,6 +24,7 @@ export const Form = () => {
 
   useEffect(() => {
     if (patient?.name) {
+      patient.date = patient.date.split('T')[0];
       setFormValues(patient);
       setId(patient._id);
     }

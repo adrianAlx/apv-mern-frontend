@@ -15,6 +15,7 @@ import { ConfirmAccount } from '../pages/ConfirmAccount';
 import { NewPassword } from '../pages/NewPassword';
 import { EditProfile } from '../pages/EditProfile';
 import { ChangePassword } from '../pages/ChangePassword';
+import { PatientsProvider } from '../context/PatientsProvider';
 
 export const AppRouter = () => {
   const { authLoading } = useAuth();
@@ -47,7 +48,9 @@ export const AppRouter = () => {
           path="/admin"
           element={
             <PrivateRoute>
-              <DashboardLayout />
+              <PatientsProvider>
+                <DashboardLayout />
+              </PatientsProvider>
             </PrivateRoute>
           }
         >

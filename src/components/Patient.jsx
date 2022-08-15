@@ -1,15 +1,10 @@
+import { formatDate } from '../helpers/formatDate';
 import { usePatients } from '../hook/usePatients';
 
 export const Patient = ({ patient }) => {
   const { name, email, owner, date, symptoms } = patient;
 
   const { setPatientCb, deletePatient } = usePatients();
-
-  // Esta API propia de JS No muta la fecha
-  const formatDate = date =>
-    new Intl.DateTimeFormat('es-MX', { dateStyle: 'long' }).format(
-      new Date(date)
-    );
 
   return (
     <div className="mx-5 my-10 bg-white shadow-md px-5 py-10 rounded-xl">
