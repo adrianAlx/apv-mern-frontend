@@ -40,9 +40,13 @@ The user must register with an e-mail address that has not been used before. Onc
 This link will contain a one-time use token which, after validation, will be removed from the database so that it cannot be used again.
 
 ## View demo
+
+You can log in with `adrian@test.com` and password `test123`.
+
 [Demo](https://apv-mern-adrianlx.netlify.app/)
 
 ## Backend
+
 [GitHub](https://github.com/adrianAlx/apv-mern-back)
 
 ### Screenshots
